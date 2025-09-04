@@ -158,6 +158,25 @@ def ray_deps_setup():
         sha256 = "a6e372118bc961b182a3a86344c0385b6b509882929c6b12dc03bb5084c775d5",
     )
 
+    git_repository(
+        name = "lz4",
+        build_file = "@io_ray//bazel:BUILD.lz4",
+        tag = "v1.9.3",
+        remote = "https://github.com/lz4/lz4.git"
+    )
+
+    auto_http_archive(
+        name = "com_github_confluentinc_librdkafka",
+        build_file = "@io_ray//bazel:BUILD.librdkafka",
+        sha256 = "2d49c35c77eeb3d42fa61c43757fcbb6a206daa560247154e60642bcdcc14d12",
+        strip_prefix = "librdkafka-2.3.0",
+        url = "https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.3.0.tar.gz",
+        patches = [
+            "@io_ray//thirdparty/patches:librdkafka-0001-Remove-upward-folder-traversal.patch",
+        ],
+        patch_args = ["-p1"],
+    )
+
     http_archive(
         name = "bazel_skylib",
         sha256 = "9f38886a40548c6e96c106b752f242130ee11aaa068a56ba7e56f4511f33e4f2",
